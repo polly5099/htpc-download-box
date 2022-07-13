@@ -11,6 +11,8 @@ services:
       - ${ROOT}/config/vpn:/vpn #OpenVPN configuration
     security_opt:
       - label:disable
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0      
     ports:
       - 8112:8112 # port for deluge web UI to be reachable from local network
     command: '-f "" -r 192.168.1.0/24' # enable firewall and route local network traffic
@@ -82,8 +84,8 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     network_mode: host
     volumes:
-      - ${ROOT}/config/plex/db:/config # plex database
-      - ${ROOT}/config/plex/transcode:/transcode # temp transcoded files
+      - ${ROOT}/config/plex:/root/Library # plex config
+      - ${ROOT}/config/plextranscode:/transcode # plex config
       - ${ROOT}/complete:/data # media library
 
   nzbget:
