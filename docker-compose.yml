@@ -104,6 +104,19 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${ROOT}/config/prowlarr:/config # config files
 
+  openbooks:
+    ports:
+      - '8080:80'
+    volumes:
+      - ${ROOT}/complete/books:/books
+    restart: unless-stopped
+    container_name: openbooks
+    command: --name sascher123 --persist
+    environment:
+      - BASE_PATH=/openbooks/
+    image: evanbuss/openbooks:latest
+
+
   plex-server:
     container_name: plex-server
     image: jaymoulin/plex:latest
